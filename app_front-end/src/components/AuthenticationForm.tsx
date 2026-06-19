@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register as registerUser, login as loginUser } from "../services/authService";
+import { register as registerUser } from "../services/authService";
+import { useAuth } from "../hooks/useAuth";
 import "./AuthenticationForm.css";
 
 type LoginFields = {
@@ -58,18 +59,6 @@ const COUNTRIES_CITIES: Record<string, string[]> = {
     "Hamilton",
     "Kitchener",
   ].sort(),
-  Djibouti: [
-    "Djibouti",
-    "Ali Sabieh",
-    "Tadjoura",
-    "Obock",
-    "Dikhil",
-    "Arta",
-    "Holhol",
-    "Loyada",
-    "Balho",
-    "Yoboki",
-  ].sort(),
   Algérie: [
     "Alger",
     "Oran",
@@ -79,13 +68,13 @@ const COUNTRIES_CITIES: Record<string, string[]> = {
     "Batna",
     "Djelfa",
     "Sétif",
-    "Sidi Bel Abbès",
-    "Biskra",
+    "Relizane",
   ].sort(),
 };
 
 export const AuthentificationForm: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loginMessage, setLoginMessage] = useState("");
   const [signupMessage, setSignupMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -117,8 +106,8 @@ export const AuthentificationForm: React.FC = () => {
     setLoginMessage("");
 
     try {
-      const response = await loginUser(data);
-      setLoginMessage(response.message);
+      await login(data);
+      setLoginMessage("Connexion réussie");
       
       setTimeout(() => {
         navigate("/profile-2");
@@ -151,7 +140,7 @@ export const AuthentificationForm: React.FC = () => {
 
       // Connexion automatique après inscription
       setTimeout(async () => {
-        await loginUser({
+        await login({
           email: data.email,
           password: data.password,
         });
