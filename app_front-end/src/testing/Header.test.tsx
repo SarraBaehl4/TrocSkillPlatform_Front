@@ -1,66 +1,84 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { act } from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import { Header } from "../components/commons/Header";
+import { AuthContext } from "../context/AuthContext";
+import type { AuthContextType } from "../context/AuthContext";
 
-let container: HTMLDivElement;
 
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
+const navigateMock = vi.fn();
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => navigateMock,
+  };
 });
 
-const render = (ui: React.ReactElement) => {
-  act(() => {
-    const root = ReactDOM.createRoot(container);
-    root.render(ui);
-  });
-};
+
+function renderHeader() {
+  const fakeAuth: AuthContextType = {
+    user: null,
+    isLoading: false,
+    login: vi.fn(),
+    logout: vi.fn().mockResolvedValue(undefined),
+  };
+
+  render(
+    <MemoryRouter>
+      <AuthContext.Provider value={fakeAuth}>
+        <Header />
+      </AuthContext.Provider>
+    </MemoryRouter>
+  );
+
+  return fakeAuth;
+}
 
 describe("Header", () => {
-  it("renders the title", () => {
-    render(<Header />);
-    expect(document.body.textContent).toContain("TROCSKILL-HUB");
+  beforeEach(() => {
+    navigateMock.mockClear();
   });
 
-  it("menu is closed by default", () => {
-    render(<Header />);
-
-    const menu = container.querySelector(".nav-menu");
-
-    expect(menu?.classList.contains("active")).toBe(false);
+  it("affiche le titre", () => {
+    renderHeader();
+    expect(screen.getByText("TROCSKILL-HUB")).toBeInTheDocument();
   });
 
-  it("opens the menu when clicking the toggle button", () => {
-    render(<Header />);
-
-    const button = container.querySelector("button.menu-toggle") as HTMLButtonElement;
-    const menu = container.querySelector(".nav-menu") as HTMLElement;
-
-    act(() => {
-      button.click();
-    });
-
-    expect(menu.classList.contains("active")).toBe(true);
+  it("le menu est fermé par défaut", () => {
+    renderHeader();
+    const menu = document.querySelector(".nav-menu");
+    expect(menu).not.toHaveClass("active");
   });
 
-  it("toggles the menu open and closed", () => {
-    render(<Header />);
+  it("ouvre le menu au clic sur le bouton toggle", () => {
+    renderHeader();
+    const toggleButton = screen.getByLabelText("Menu");
 
-    const button = container.querySelector("button.menu-toggle") as HTMLButtonElement;
-    const menu = container.querySelector(".nav-menu") as HTMLElement;
+    fireEvent.click(toggleButton);
 
-    act(() => {
-      button.click();
-    });
+    const menu = document.querySelector(".nav-menu");
+    expect(menu).toHaveClass("active");
+  });
 
-    expect(menu.classList.contains("active")).toBe(true);
+  it("ferme le menu si on clique deux fois sur le bouton toggle", () => {
+    renderHeader();
+    const toggleButton = screen.getByLabelText("Menu");
 
-    act(() => {
-      button.click();
-    });
+    fireEvent.click(toggleButton);
+    fireEvent.click(toggleButton);
 
-    expect(menu.classList.contains("active")).toBe(false);
+    const menu = document.querySelector(".nav-menu");
+    expect(menu).not.toHaveClass("active");
+  });
+
+  it("appelle logout() et redirige vers /login au clic sur Déconnexion", async () => {
+    const fakeAuth = renderHeader();
+
+    fireEvent.click(screen.getByText("Déconnexion"));
+
+    expect(fakeAuth.logout).toHaveBeenCalledOnce();
+    await waitFor(() => expect(navigateMock).toHaveBeenCalledWith("/login"));
   });
 });
