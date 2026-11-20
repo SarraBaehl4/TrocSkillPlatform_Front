@@ -1,69 +1,61 @@
-# TrocSkillHub — Front-end 
+# TrocSkillHub — Front-end
 
-This README explains how to install, run and build the application locally, and how to run it with Docker.Currently, two official plugins are available:
+Interface web de **TrocSkillHub**, une plateforme d'échange de compétences.
+Application **React + TypeScript (Vite)** connectée à une API **Spring Boot** (dépôt séparé) via un cookie JWT.
 
-## Prerequisites- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+**Fonctionnalités :** inscription, connexion/déconnexion, pages protégées, profil utilisateur.
 
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-- Node.js (recommended versions: 16.x or 18.x)
+React 19 · TypeScript · Vite · React Router · React Hook Form · Vitest · Docker + Nginx · GitHub Actions
 
-- npm (or yarn / pnpm) — examples below use `npm`## React Compiler
+## Lancer le projet
 
-- Git (for cloning the repository)
-
-- (Optional) Docker & Docker Compose — if you want to run the app in a containerThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Development setup## Expanding the ESLint configuration
+**Prérequis :** Node.js 20+ et npm (Docker en option).
 
 ```bash
 cd app_front-end
-```
-
-2. Install dependencies:
-
-```bash
 npm install
-# or with yarn: yarn
-# or with pnpm: pnpm install
+npm run dev        # http://localhost:5173
 ```
 
-3. Start the development server (Vite):
+> ⚠️ Le front a besoin de l'API pour fonctionner. Vite n'a pas de proxy vers `/api` : pour tester l'application complète, utilisez Docker.
+
+## Lancer avec Docker
 
 ```bash
-npm run dev
+docker network create trocskillhub-network   # une seule fois
+# démarrer le back-end (service "app") sur ce réseau, puis :
+docker compose up --build                    # http://localhost:8099
 ```
 
-By default Vite serves the app at http://localhost:5173 (or another free port if 5173 is in use).
+Nginx sert le front et redirige `/api/*` vers le back-end (`http://app:8080`).
 
-## Useful scripts (from `app_front-end`)
+## Scripts utiles
 
-- `npm run dev` — start development server with HMR
-- `npm run build` — build the app for production (output in `dist`)
-- `npm run preview` — serve the production build locally (if configured)
-- `npm run lint` — run ESLint (if configured)
+À lancer depuis `app_front-end/` :
 
-Check `package.json` for the exact scripts available in this project.
+| Commande | Rôle |
+|---|---|
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build de production (`dist/`) |
+| `npm run lint` | Analyse ESLint |
+| `npm run test:ci` | Lance les tests une fois |
 
-## Building for production
+## Organisation du code
 
-1. Create a production build:
-
-```bash
-npm run build
+```
+app_front-end/src/
+├── pages/        # Authentification, profil
+├── components/   # Header, formulaire, ProtectedRoute, sections du profil
+├── context/      # AuthContext : état de connexion
+├── hooks/        # useAuth, useUser
+├── services/     # Appels API
+└── testing/      # Tests Vitest
 ```
 
-2. Build output will be written to `app_front-end/dist`.
+**Routes :** `/login` est publique. `/`, `/profile` et `/profile-2` exigent d'être connecté. Sinon, l'utilisateur est redirigé vers `/login`.
 
-Serve that folder with any static server (nginx, `serve`, Surge, etc.). This project includes an `nginx.conf` and a `Dockerfile` to help deploy the build.
+## CI
 
-## Running with Docker / Docker Compose
-
-There is a `Dockerfile` and a `docker-compose.yaml` at the repository root. Minimal examples to build and run the image:
-
-```bash
-# Build the Docker image from the repository root
-docker build -t trocskillhub-frontend .
-
-# Or use docker compose (from the repository root)
-docker compose up --build
+À chaque pull request, GitHub Actions exécute : installation → lint → build → tests.
