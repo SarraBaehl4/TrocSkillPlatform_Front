@@ -33,9 +33,6 @@ export interface UserProfile extends UserCardData {
   about: string;
   competences: string[];
   besoins: string[];
-  formations: string;
-  experiences: string;
-  projets: string;
 }
 
 export interface ProfilPageProps {

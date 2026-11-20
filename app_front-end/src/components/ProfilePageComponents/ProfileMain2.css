@@ -160,8 +160,7 @@
 }
 
 /* ===== AJUSTEMENTS POUR SECTIONS VIDES ===== */
-.section-card.incomplete-section,
-.info-section.incomplete-section {
+.section-card.incomplete-section {
   background-color: white;
 }
 

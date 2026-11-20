@@ -76,51 +76,6 @@ const ProfileMain: React.FC<ProfileMainProps> = ({ userId }) => {
       "Documentation de systèmes complexes",
       "Mentorat scientifique"
     ],
-    formations: [
-      {
-        titre: "Études privées en Mathématiques",
-        etablissement: "Tutorat avec Mary Somerville",
-        periode: "1833 - 1835",
-        description: "Formation approfondie en mathématiques et sciences avec Mary Somerville, l'une des premières femmes scientifiques reconnues en Grande-Bretagne."
-      },
-      {
-        titre: "Études de la Logique",
-        etablissement: "Tutorat avec Augustus De Morgan",
-        periode: "1840 - 1841",
-        description: "Études avancées en logique mathématique et calcul différentiel avec Augustus De Morgan, professeur de mathématiques à l'University College London."
-      }
-    ],
-    experiences: [
-      {
-        poste: "Traductrice et Commentatrice Scientifique",
-        entreprise: "Collaboration avec Charles Babbage",
-        periode: "1842 - 1843",
-        description: "Traduction de l'article de Luigi Menabrea sur la machine analytique de Babbage. Ajout de notes explicatives trois fois plus longues que l'article original, incluant le premier algorithme destiné à être exécuté par une machine."
-      },
-      {
-        poste: "Chercheuse Indépendante",
-        entreprise: "Recherches personnelles",
-        periode: "1835 - 1852",
-        description: "Recherches sur les applications potentielles des machines de calcul au-delà des simples calculs numériques, notamment en musique et en art génératif."
-      }
-    ],
-    projets: [
-      {
-        nom: "Notes sur la Machine Analytique",
-        description: "Publication de notes détaillées sur la machine analytique de Charles Babbage, incluant le premier algorithme informatique de l'histoire : un programme pour calculer les nombres de Bernoulli.",
-        technologies: "Notation mathématique, Logique algorithmique, Diagrammes"
-      },
-      {
-        nom: "Vision de la Programmation Créative",
-        description: "Conceptualisation visionnaire de l'utilisation des machines de calcul pour créer de la musique et de l'art, anticipant l'informatique créative de plus d'un siècle.",
-        technologies: "Théorie musicale, Mathématiques, Logique"
-      },
-      {
-        nom: "Système de Notation pour Algorithmes",
-        description: "Développement d'un système de notation permettant de décrire précisément les opérations à effectuer par une machine de calcul, précurseur des langages de programmation modernes.",
-        technologies: "Notation symbolique, Algèbre, Logique séquentielle"
-      }
-    ]
   };
 
   return (
@@ -159,66 +114,6 @@ const ProfileMain: React.FC<ProfileMainProps> = ({ userId }) => {
                   <li key={index}>{besoin}</li>
                 ))}
               </ul>
-            </div>
-          </div>
-
-          {/* Section Formations */}
-          <div className="info-section">
-            <h3 className="info-section__title">Formations</h3>
-            <div className="info-section__content">
-              {demoData.formations.map((formation, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#333', marginBottom: '5px' }}>
-                    {formation.titre}
-                  </h4>
-                  <p style={{ fontSize: '14px', color: '#008B8B', marginBottom: '5px', fontWeight: '500' }}>
-                    {formation.etablissement} • {formation.periode}
-                  </p>
-                  <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
-                    {formation.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section Expériences professionnelles */}
-          <div className="info-section">
-            <h3 className="info-section__title">Expériences professionnelles</h3>
-            <div className="info-section__content">
-              {demoData.experiences.map((experience, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#333', marginBottom: '5px' }}>
-                    {experience.poste}
-                  </h4>
-                  <p style={{ fontSize: '14px', color: '#008B8B', marginBottom: '5px', fontWeight: '500' }}>
-                    {experience.entreprise} • {experience.periode}
-                  </p>
-                  <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
-                    {experience.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section Projets réalisés */}
-          <div className="info-section">
-            <h3 className="info-section__title">Projets réalisés</h3>
-            <div className="info-section__content">
-              {demoData.projets.map((projet, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#333', marginBottom: '5px' }}>
-                    {projet.nom}
-                  </h4>
-                  <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', marginBottom: '5px' }}>
-                    {projet.description}
-                  </p>
-                  <p style={{ fontSize: '13px', color: '#008B8B', fontWeight: '500' }}>
-                    Technologies : {projet.technologies}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
         </section>

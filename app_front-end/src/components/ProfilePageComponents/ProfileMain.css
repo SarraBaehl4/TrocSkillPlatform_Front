@@ -180,27 +180,6 @@
   font-weight: bold;
 }
 
-/* Sections d'information (Formations, Expériences, Projets) */
-.info-section {
-  background-color: #E8F4F8;
-  padding: 25px;
-  border-radius: 8px;
-}
-
-.info-section__title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 10px 0;
-}
-
-.info-section__content {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-  line-height: 1.5;
-}
-
 /* ===== BOUTON DEBUG ===== */
 .debug-reload {
   position: fixed;
@@ -255,8 +234,7 @@
   }
 
   .about-section,
-  .section-card,
-  .info-section {
+  .section-card {
     padding: 20px;
   }
 
@@ -276,20 +254,17 @@
   }
 
   .about-section,
-  .section-card,
-  .info-section {
+  .section-card {
     padding: 15px;
   }
 
   .section-title,
-  .section-card__title,
-  .info-section__title {
+  .section-card__title {
     font-size: 15px;
   }
 
   .about-text,
-  .section-card__list li,
-  .info-section__content {
+  .section-card__list li {
     font-size: 13px;
   }
 }

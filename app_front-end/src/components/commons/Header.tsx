@@ -1,9 +1,19 @@
 import "../../styles/Header.css";
 import reactLogo from "../../assets/Ada_Lovelace.jpg";
 import { useState } from "react";
+import { logout } from "../../services/authService";
 
 export const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Déconnexion : supprime le cookie JWT côté API puis renvoie vers /login
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      window.location.assign("/login");
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -39,7 +49,7 @@ export const Header: React.FC = () => {
         </ul>
         <ul className="nav-right">
           <li>
-            <button>Déconnexion</button>
+            <button onClick={handleLogout}>Déconnexion</button>
           </li>
           <li>
             <img src={reactLogo} alt="Profil" className="nav-avatar" />

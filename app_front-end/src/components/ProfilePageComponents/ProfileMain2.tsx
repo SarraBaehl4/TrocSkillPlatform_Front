@@ -130,47 +130,6 @@ const ProfileMain2: React.FC<ProfileMain2Props> = ({ userId }) => {
             </div>
           </div>
 
-          {/* Section Formations */}
-          <div className="info-section incomplete-section">
-            <h3 className="info-section__title">Formations</h3>
-            <div className="empty-state">
-              <span className="empty-state__icon">🎓</span>
-              <p className="empty-state__text">
-                Ajoutez vos formations académiques, certifications et parcours éducatifs pour valoriser votre profil.
-              </p>
-              <button className="complete-button complete-button--small">
-                Ajouter mes formations
-              </button>
-            </div>
-          </div>
-
-          {/* Section Expériences professionnelles */}
-          <div className="info-section incomplete-section">
-            <h3 className="info-section__title">Expériences professionnelles</h3>
-            <div className="empty-state">
-              <span className="empty-state__icon">💼</span>
-              <p className="empty-state__text">
-                Partagez votre parcours professionnel, vos postes et responsabilités pour inspirer confiance.
-              </p>
-              <button className="complete-button complete-button--small">
-                Ajouter mes expériences
-              </button>
-            </div>
-          </div>
-
-          {/* Section Projets réalisés */}
-          <div className="info-section incomplete-section">
-            <h3 className="info-section__title">Projets réalisés</h3>
-            <div className="empty-state">
-              <span className="empty-state__icon">🚀</span>
-              <p className="empty-state__text">
-                Mettez en avant vos réalisations et projets marquants pour démontrer vos compétences en action.
-              </p>
-              <button className="complete-button complete-button--small">
-                Ajouter mes projets
-              </button>
-            </div>
-          </div>
 
           {/* Indicateur de progression du profil */}
           <div className="profile-completion">
