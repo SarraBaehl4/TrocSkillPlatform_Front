@@ -1,6 +1,6 @@
 # TrocSkillHub — Front-end
 
-Interface web de **TrocSkillHub**, une plateforme d'échange de compétences.
+**TrocSkillHub**, une plateforme d'échange de compétences.
 Application **React + TypeScript (Vite)** connectée à une API **Spring Boot** (dépôt séparé) via un cookie JWT.
 
 **Fonctionnalités :** inscription, connexion/déconnexion, pages protégées, profil utilisateur.
